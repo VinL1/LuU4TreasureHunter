@@ -19,8 +19,8 @@ public class Town
     //Constructor
     /**
      * The Town Constructor takes in a shop and the surrounding terrain, but leaves the hunter as null until one arrives.
-     * @param s The town's shoppe.
-     * @param t The surrounding terrain.
+     * @param shop The town's shoppe.
+     * @param toughness The surrounding terrain.
      */
     public Town(Shop shop, double toughness)
     {
@@ -51,7 +51,7 @@ public class Town
 
     /**
      * Assigns an object to the Hunter in town.
-     * @param h The arriving Hunter.
+     * @param hunter The arriving Hunter.
      */
     public void hunterArrives(Hunter hunter)
     {
@@ -147,7 +147,7 @@ public class Town
         String treasureStr = Treasure.getType();
         printMessage += ("You wander around the town looking for loot, and magically find...\n" + treasureStr + "on the ground!");
 
-        if (treasureStr.equals(Treasure.NOTHING)) {
+        if (treasureStr.equals(Treasure.DUST)) {
             printMessage += ("\nHow unlucky.");
         } else {
             if (hunter.collectTreasure(Treasure)){

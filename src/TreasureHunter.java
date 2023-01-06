@@ -49,8 +49,11 @@ public class TreasureHunter
         System.out.print("What's your name, Hunter? ");
         String name = scanner.nextLine();
 
+        // set hunter instance variable
+        hunter = new Hunter(name, 10, easyMode, hardMode);
+
         // detects if user wants easy or hard mode, otherwise code runs with default values
-        System.out.print("Which difficulty would you like? (Easy/Normal/Hard");
+        System.out.print("Which difficulty would you like? (Easy/Normal/Hard) ");
         String difficulty = scanner.nextLine();
         if (difficulty.toLowerCase() == "easy") {
             easyMode = true;
@@ -60,9 +63,6 @@ public class TreasureHunter
         {
             hardMode = true;
         }
-
-        // set hunter instance variable
-        hunter = new Hunter(name, 10, easyMode, hardMode);
     }
 
     /**

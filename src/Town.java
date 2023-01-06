@@ -11,7 +11,7 @@ public class Town
     private Terrain terrain;
     private String printMessage;
     private boolean toughTown;
-    private Treasure Treasure;
+    private Treasure treasure;
 
     //set to 0 initially; 1 == win & gameover; 2 == lose & game over
     private int winCondition;
@@ -36,7 +36,7 @@ public class Town
         // higher toughness = more likely to be a tough town
         toughTown = (Math.random() < toughness);
 
-        Treasure = new Treasure ();
+        treasure = new Treasure ();
         winCondition=0;
     }
 
@@ -122,6 +122,9 @@ public class Town
         {
             printMessage = "You want trouble, stranger!  You got it!\nOof! Umph! Ow!\n";
             int goldDiff = (int)(Math.random() * 10) + 1;
+            if (hunter.getDifficulty() == "easy") {
+                goldDiff = goldDiff * 2;
+            }
             if (Math.random() > noTroubleChance)
             {
                 printMessage += "Okay, stranger! You proved yer mettle. Here, take my gold.";
@@ -144,13 +147,13 @@ public class Town
 
     public void huntForTreasure ()
     {
-        String treasureStr = Treasure.getType();
+        String treasureStr = treasure.getType();
         printMessage += ("You wander around the town looking for loot, and magically find...\n" + treasureStr + "on the ground!");
 
-        if (treasureStr.equals(Treasure.DUST)) {
-            printMessage += ("\nHow unlucky.");
+        if (treasureStr.equals(Treasure .DUST)) {
+            printMessage += ("\nHow unlucky. You found a useless pile of dust.");
         } else {
-            if (hunter.collectTreasure(Treasure)){
+            if (hunter.collectTreasure(treasure)){
                 printMessage+= ("\nYou don't have this in your collection yet. Pick it up and add it.");
                 if(Treasure.collectedAllTreasures(hunter.getTreasureCollection())){
                     winCondition = 1;
@@ -204,6 +207,9 @@ public class Town
     private boolean checkItemBreak()
     {
         double rand = Math.random();
+        if (hunter.getDifficulty() == "easy") {
+            rand -= .25;
+        }
         return (rand < 0.5);
     }
 

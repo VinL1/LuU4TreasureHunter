@@ -13,6 +13,8 @@ public class Hunter
     private String kit;
     private String treasureCollection = "";
     private int gold;
+    private boolean easy;
+    private boolean hard;
 
     //Constructor
     /**
@@ -20,11 +22,13 @@ public class Hunter
      *
      * @param hunterName The hunter's name.
      */
-    public Hunter(String hunterName, int startingGold)
+    public Hunter(String hunterName, int startingGold, boolean easy, boolean hard)
     {
         this.hunterName = hunterName;
         kit = "";
         gold = startingGold;
+        this.easy = easy;
+        this.hard = hard;
     }
 
     //Accessors
@@ -203,6 +207,16 @@ public class Hunter
             updatedStr = updatedStr.substring(0, index) + space + updatedStr.substring(index +1);
         }
         return updatedStr;
+    }
+
+    public String getDifficulty () {
+        if (easy) {
+            return "easy";
+        }
+        if (hard) {
+            return "hard";
+        }
+        return "normal";
     }
 
     /**

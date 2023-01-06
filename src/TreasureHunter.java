@@ -5,6 +5,7 @@
  *
  * This code has been adapted from Ivan Turner's original program -- thank you Mr. Turner!
  */
+import java.util.Locale;
 import java.util.Scanner;
 
 public class TreasureHunter
@@ -13,6 +14,7 @@ public class TreasureHunter
     private Town currentTown;
     private Hunter hunter;
     private boolean hardMode;
+    private boolean easyMode;
 
     //Constructor
     /**
@@ -24,6 +26,7 @@ public class TreasureHunter
         currentTown = null;
         hunter = null;
         hardMode = false;
+        easyMode = false;
     }
 
     // starts the game; this is the only public method
@@ -46,16 +49,20 @@ public class TreasureHunter
         System.out.print("What's your name, Hunter? ");
         String name = scanner.nextLine();
 
-        // set hunter instance variable
-        hunter = new Hunter(name, 10);
-
-        System.out.print("Hard mode? (y/n): ");
-        String hard = scanner.nextLine();
-        if (hard.equals("y") || hard.equals("Y"))
+        // detects if user wants easy or hard mode, otherwise code runs with default values
+        System.out.print("Which difficulty would you like? (Easy/Normal/Hard");
+        String difficulty = scanner.nextLine();
+        if (difficulty.toLowerCase() == "easy") {
+            easyMode = true;
+            hunter.changeGold(40);
+        }
+        if (difficulty.toLowerCase() == "hard")
         {
             hardMode = true;
         }
 
+        // set hunter instance variable
+        hunter = new Hunter(name, 10, easyMode, hardMode);
     }
 
     /**
@@ -72,6 +79,14 @@ public class TreasureHunter
 
             // and the town is "tougher"
             toughness = 0.75;
+        }
+
+        if (easyMode) {
+            // in easy mode, you get more money back when you sell items
+            markdown = .125;
+
+            // and the town is "tougher"
+            toughness = .2;
         }
 
         // note that we don't need to access the Shop object
@@ -124,7 +139,7 @@ public class TreasureHunter
             winCondition = currentTown.getWinCondition();
             if (winCondition ==1){
                 System.out.println(currentTown.getLatestNews());
-                System.out.println("Quite the treasure hunter you are! DOn't spend it all in one space! You win game over");
+                System.out.println("Quite the treasure hunter you are! Don't spend it all in one space! You win game over");
             }
             if (winCondition ==2){
                 System.out.println(currentTown.getLatestNews());
@@ -168,5 +183,15 @@ public class TreasureHunter
         {
             System.out.println("Yikes! That's an invalid option! Try again.");
         }
+    }
+
+    private String getDifficulty (){
+        if (easyMode) {
+            return "easy";
+        }
+        if (hardMode) {
+            return "hard";
+        }
+        return "normal";
     }
 }
